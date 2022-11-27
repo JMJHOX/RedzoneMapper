@@ -47,7 +47,7 @@ tables_1 = tabula.read_pdf("TESTPDF.pdf",  multiple_tables=True,
                            pages="1",
                            silent=True,
                            encoding='cp1252',
-                           area=[150, 28.20, 315, 170], guess=False, lattice=True)
+                           area=[120, 28.20, 315, 170], guess=False, lattice=True)
 tables_2 = tabula.read_pdf("TESTPDF.pdf",  multiple_tables=True,
                            pages="2",
                            silent=True,

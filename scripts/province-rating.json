@@ -1,4 +1,11 @@
 [
+  {
+    "province": "TOTAL.............",
+    "total_crimes": "53",
+    "violence_rating": 3
+  },
+  { "province": "Chagres", "total_crimes": "1", "violence_rating": 1 },
+  { "province": "Achiote", "total_crimes": "1", "violence_rating": 1 },
   { "province": "Colon", "total_crimes": "50", "violence_rating": 3 },
   { "province": "Barrio Norte", "total_crimes": "8", "violence_rating": 2 },
   { "province": "Barrio Sur", "total_crimes": "7", "violence_rating": 2 },
