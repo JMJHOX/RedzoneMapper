@@ -2,7 +2,18 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, GeoJSON, Tooltip } from "react-leaflet";
 import "./App.css";
+interface provinceInfo {
+  province?: string;
+  violence_rating?: number;
+}
 
+export enum colorRating {
+  GOOD = "#47CB54",
+  WARNING = "#ECD24A",
+  DANGER = "#E33A3A",
+  HELL = "#3B3B3B",
+  DOUBT = "#2596be",
+}
 function App() {
   const [geoJSON, setGeoJSON] = useState(null);
   const [geoJSONPROVINCES, setgeoJSONPROVINCES] = useState(null);
@@ -25,7 +36,7 @@ function App() {
       setgeoJSONPROVINCES(responseProvinces.data);
       let crime_list: any = [];
       let crime_province: any = [];
-      responseCrimes.data.map(({ province, violence_rating }: any) => {
+      responseCrimes.data.forEach(({ province, violence_rating }: any) => {
         crime_province.push(province);
         crime_list.push({ province, violence_rating });
       });
@@ -71,9 +82,41 @@ function App() {
     });
     console.log(layer.feature.properties);
     // console.log(provincesCrimes)
-    if (provincesCrimes?.includes(layer.feature.properties.LABEL)) {
-      console.log("a");
-      layer.setStyle({ fillColor: "#2596be" });
+    const checkProvinceIsOnList = provincesCrimes.includes(
+      layer.feature.properties.LABEL
+    );
+    if (checkProvinceIsOnList) {
+      console.log("check:");
+      const province_info: provinceInfo =
+        provincesCrimesList[
+          provincesCrimes.indexOf(layer.feature.properties.LABEL)
+        ];
+
+      switch (province_info.violence_rating) {
+        case 0: {
+          layer.setStyle({ fillColor: colorRating.GOOD });
+          break;
+        }
+        case 1: {
+          layer.setStyle({ fillColor: colorRating.WARNING });
+          break;
+        }
+        case 2: {
+          layer.setStyle({ fillColor: colorRating.DANGER });
+          break;
+        }
+        case 3: {
+          layer.setStyle({ fillColor: colorRating.HELL });
+          break;
+        }
+        default: {
+          layer.setStyle({ fillColor: colorRating.DOUBT });
+          break;
+        }
+      }
+    }
+    if (!checkProvinceIsOnList) {
+      layer.setStyle({ fillColor: colorRating.DOUBT });
     }
     layer.on({
       //   mouseover: (event: any) => {
