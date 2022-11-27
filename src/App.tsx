@@ -1,16 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import {
-  MapContainer,
-  TileLayer,
-  GeoJSON,
-  Tooltip,
-} from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON, Tooltip } from "react-leaflet";
 import "./App.css";
 
 function App() {
   const [geoJSON, setGeoJSON] = useState(null);
   const [geoJSONPROVINCES, setgeoJSONPROVINCES] = useState(null);
+  const [provincesCrimes, setProvincesCrimes] = useState([{}]);
+  const [provincesCrimesList, setProvincesList] = useState([{}]);
   async function fetchGeoJSON() {
     const responsePan = await axios.get(
       "https://raw.githubusercontent.com/inmagik/world-countries/master/countries/PAN.geojson"
@@ -21,8 +18,21 @@ function App() {
     const responseProvinces = await axios.get(
       "https://s3.amazonaws.com/tabulario/Data/Instituto+Tommy+Guardia/limites-geograficos-de-panama/distritos-panama.geojson"
     );
-    if (responseProvinces) {
+    const responseCrimes = await axios.get(
+      "https://raw.githubusercontent.com/JMJHOX/RedzoneMapper/development/scripts/province-rating.json"
+    );
+    if (responseProvinces && responseCrimes) {
       setgeoJSONPROVINCES(responseProvinces.data);
+      let crime_list: any = [];
+      let crime_province: any = [];
+      responseCrimes.data.map(({ province, violence_rating }: any) => {
+        crime_province.push(province);
+        crime_list.push({ province, violence_rating });
+      });
+      console.log("crime_provinces:", crime_province);
+      console.log("crime_list:", crime_list);
+      setProvincesList(crime_list);
+      setProvincesCrimes(crime_province);
     }
   }
 
@@ -50,31 +60,32 @@ function App() {
   }
 
   const onEachCountry = (province: any, layer: any) => {
-    //console.log(province)
-    //console.log(province.properties.LABEL)
+    console.log(province);
+    console.log(province.properties.LABEL);
     const name = province.properties.LABEL;
-   
+
     layer.bindTooltip(name, {
       direction: "center",
       permanent: true,
       className: "labelstyle",
     });
-    console.log(layer.feature.properties)
-    if(layer.feature.properties.LABEL === 'David') {    
-      layer.setStyle({fillColor :'blue'}) 
+    console.log(layer.feature.properties);
+    // console.log(provincesCrimes)
+    if (provincesCrimes?.includes(layer.feature.properties.LABEL)) {
+      console.log("a");
+      layer.setStyle({ fillColor: "#2596be" });
     }
     layer.on({
-
-  //   mouseover: (event: any) => {
-  //     event.target.setStyle({
-  //       fillColor: "#B85042",
-  //     });
-  //   },
-  //   mouseout: (event: any) => {
-  //     event.target.setStyle({
-  //       fillColor: "#A7BEAE",
-  //     });
-  //   },
+      //   mouseover: (event: any) => {
+      //     event.target.setStyle({
+      //       fillColor: "#B85042",
+      //     });
+      //   },
+      //   mouseout: (event: any) => {
+      //     event.target.setStyle({
+      //       fillColor: "#A7BEAE",
+      //     });
+      //   },
       click: () => {
         console.log("hello");
       },
