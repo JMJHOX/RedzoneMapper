@@ -78,6 +78,6 @@ for table in tables_list:
 constructed_data = pd.DataFrame(
     {'province': processed_provinces, 'value': processed_values})
 rated_provinces = rate_province(constructed_data)
-finished_conv = pd.DataFrame({'provinces': processed_provinces, 'total': processed_values,
+finished_conv = pd.DataFrame({'province': processed_provinces, 'total_crimes': processed_values,
                               'violence_rating': rated_provinces})
 finished_conv.to_json("province-rating.json", orient='records')
