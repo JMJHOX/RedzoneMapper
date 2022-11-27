@@ -16,7 +16,8 @@ function LegendComponent() {
         const div = L.DomUtil.create("div", "info legend");
         div.innerHTML = `
         <ul style="list-style: none;">
-        <li><h4> <span class="color-box"  style="background-color: ${colorRating.GOOD};"></span> No existe crimen</h4></li>
+        <li><h4> Indice de crimen</h4></li>
+        <li><h4> <span class="color-box"  style="background-color: ${colorRating.GOOD};"></span> No existe</h4></li>
         <li><h4> <span class="color-box"  style="background-color: ${colorRating.NOTBAD};"></span> Bajo</h4></li>
         <li><h4> <span class="color-box"  style="background-color:${colorRating.WARNING};"></span> Moderado       </h4></li>
         <li> <h4> <span class="color-box"  style="background-color: ${colorRating.DANGER};"></span> Alto</h4>  </li>
