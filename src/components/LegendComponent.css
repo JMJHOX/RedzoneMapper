@@ -1,0 +1,25 @@
+.info {
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: white;
+  border-radius: 5px;
+  bottom: 0;
+  right: 0;
+  position: fixed;
+}
+
+.legend {
+  text-align: left;
+  line-height: 18px;
+  color: #555;
+}
+.color-box {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  background-color: #ccc;
+  
+  left: 5px;
+  top: 5px;
+  border: 1px solid #000;
+}

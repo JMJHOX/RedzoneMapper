@@ -1,4 +1,6 @@
 import { MapContainer, TileLayer, GeoJSON, Tooltip } from "react-leaflet";
+import LegendComponent from "../components/legendComponent";
+
 import { provinceInfo } from "../types/models";
 import { colorRating } from "../utils/enums";
 import "./map.css";
@@ -43,15 +45,15 @@ const MapShowerPage = (props: props) => {
           break;
         }
         case 1: {
-          layer.setStyle({ fillColor: colorRating.WARNING });
+          layer.setStyle({ fillColor: colorRating.NOTBAD });
           break;
         }
         case 2: {
-          layer.setStyle({ fillColor: colorRating.DANGER });
+          layer.setStyle({ fillColor: colorRating.WARNING });
           break;
         }
         case 3: {
-          layer.setStyle({ fillColor: colorRating.HELL });
+          layer.setStyle({ fillColor: colorRating.DANGER });
           break;
         }
         default: {
@@ -77,6 +79,8 @@ const MapShowerPage = (props: props) => {
       click: () => {},
     });
   };
+  //var control = L.control.layers();
+  //control.addTo(map);
 
   return (
     <MapContainer
@@ -88,12 +92,8 @@ const MapShowerPage = (props: props) => {
         width: "100%",
       }}
     >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-      {/*geoJSON && <GeoJSON data={geoJSON} style={style1} />*/}
       {props.geoJSONPROVINCES && (
         <GeoJSON
           data={props.geoJSONPROVINCES}
@@ -104,6 +104,7 @@ const MapShowerPage = (props: props) => {
       <Tooltip direction="bottom" offset={[0, 20]} opacity={1} permanent>
         permanent Tooltip for Rectangle
       </Tooltip>
+      <LegendComponent />
     </MapContainer>
   );
 };
