@@ -17,7 +17,7 @@ function App() {
   const [provincesCrimesList, setProvincesList] = useState([{}]);
   async function fetchGeoJSON() {
     const responseProvinces = await axios.get(
-      "https://s3.amazonaws.com/tabulario/Data/Instituto+Tommy+Guardia/limites-geograficos-de-panama/distritos-panama.geojson"
+      "https://raw.githubusercontent.com/JMJHOX/RedzoneMapper/development/scripts/distritos-panama.geojson"
     );
     const responseCrimes = await axios.get(
       "https://raw.githubusercontent.com/JMJHOX/RedzoneMapper/development/scripts/province-rating.json"
